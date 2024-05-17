@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function InputSection() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+function InputSection({
+  title,
+  content,
+  setTitle,
+  setContent,
+  onAddButtonClick,
+}) {
   return (
     <div
       style={{
@@ -42,6 +46,7 @@ function InputSection() {
           fontWeight: 700,
           fontSize: "16px",
         }}
+        onClick={onAddButtonClick}
       >
         Add
       </button>

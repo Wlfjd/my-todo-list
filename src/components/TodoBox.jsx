@@ -1,6 +1,12 @@
 import React from 'react';
 
-function TodoBox({ item, button }) {
+function TodoBox({
+  item,
+  button,
+  onCanelHandler,
+  onDoneHandler,
+  onDeleteHandler,
+}) {
   return (
     <div
       style={{
@@ -10,8 +16,8 @@ function TodoBox({ item, button }) {
         height: "120px",
         display: "flex",
         flexDirection: "column",
-        width: "33%",
-        margin: "10px",
+        margin: "4px",
+        width: "27%",
         border: "3px solid #038387",
       }}
     >
@@ -35,6 +41,7 @@ function TodoBox({ item, button }) {
             border: "2px solid green",
             background: "none",
           }}
+          onClick={onDeleteHandler}
         >
           Delete
         </button>
@@ -46,6 +53,7 @@ function TodoBox({ item, button }) {
             flex: 1,
             borderRadius: "10px",
           }}
+          onClick={button === "Done" ? onDoneHandler : onCanelHandler}
         >
           {button}
         </button>
