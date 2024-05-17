@@ -1,59 +1,43 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import Header from 'components/Header';
 import InputSection from 'components/InputSection';
 import Layout from 'components/Layout';
 import ListSection from 'components/ListSection';
 import TodoBox from 'components/TodoBox';
-import {
-  DONE_LIST,
-  WORK_LIST,
-} from 'list';
+import { LIST_DATA } from 'list';
 
 function App() {
-  const [workList, setWorkList] = useState(WORK_LIST);
-  const [doneList, setDoneList] = useState(DONE_LIST);
+  const [todoData, setTodoData] = useState(LIST_DATA);
+
+  const WORKING_LIST = todoData.filter((item) => item.isDone !== true);
+  const DONE_LIST = todoData.filter((item) => item.isDone === true);
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const onAddButtonClick = () => {
-    setWorkList([...workList, { title, content }]);
+    setTodoData([
+      ...todoData,
+      { id: todoData.length + 1, title, content, isDone: false },
+    ]);
     setTitle("");
     setContent("");
   };
 
-  const onDeleteHandler = (list, onChange, index) => {
-    const newListData = list.filter((item) => item.id !== index);
-    onChange(newListData);
-  };
-  const onDoneHandler = (index) => {
-    const newWorkList = workList.filter((item) => item.id !== index);
-    setWorkList(newWorkList);
-
-    const doneItem = workList.find((item) => item.id === index);
-    setDoneList([
-      ...doneList,
-      {
-        id: doneList.length + 1,
-        title: doneItem.title,
-        content: doneItem.content,
-      },
-    ]);
+  const onDelete = (index) => {
+    const newListData = todoData.filter((item) => item.id !== index);
+    setTodoData(newListData);
   };
 
-  const onCanelHandler = (index) => {
-    const newDoneList = doneList.filter((item) => item.id !== index);
-    setDoneList(newDoneList);
-
-    const workItem = doneList.find((item) => item.id === index);
-    setWorkList([
-      ...workList,
-      {
-        id: workList.length + 1,
-        title: workItem.title,
-        content: workItem.content,
-      },
-    ]);
+  const onChangeState = (index) => {
+    const updatedTodos = todoData.map((todo) => {
+      if (todo.id === index) {
+        return { ...todo, id: todo.id, isDone: !todo.isDone };
+      }
+      return todo;
+    });
+    setTodoData(updatedTodos);
   };
 
   return (
@@ -67,27 +51,25 @@ function App() {
         onAddButtonClick={onAddButtonClick}
       />
       <ListSection title="Working...🔥">
-        {workList.map((item) => (
+        {WORKING_LIST.map((item) => (
           <TodoBox
+            key={item.id}
             button="Done"
             item={item}
-            onDeleteHandler={() =>
-              onDeleteHandler(workList, setWorkList, item.id)
-            }
-            onDoneHandler={() => onDoneHandler(item.id)}
+            onDeleteHandler={() => onDelete(item.id)}
+            onDoneHandler={() => onChangeState(item.id)}
           />
         ))}
       </ListSection>
 
       <ListSection title="Done !🎉">
-        {doneList.map((item) => (
+        {DONE_LIST.map((item) => (
           <TodoBox
+            key={item.id}
             button="Cancel"
             item={item}
-            onDeleteHandler={() => {
-              onDeleteHandler(doneList, setDoneList, item.id);
-            }}
-            onCanelHandler={() => onCanelHandler(item.id)}
+            onDeleteHandler={() => onDelete(item.id)}
+            onDoneHandler={() => onChangeState(item.id)}
           />
         ))}
       </ListSection>

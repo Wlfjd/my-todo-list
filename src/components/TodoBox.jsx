@@ -1,12 +1,6 @@
 import React from 'react';
 
-function TodoBox({
-  item,
-  button,
-  onCanelHandler,
-  onDoneHandler,
-  onDeleteHandler,
-}) {
+function TodoBox({ item, button, onDoneHandler, onDeleteHandler }) {
   return (
     <div
       style={{
@@ -53,7 +47,7 @@ function TodoBox({
             flex: 1,
             borderRadius: "10px",
           }}
-          onClick={button === "Done" ? onDoneHandler : onCanelHandler}
+          onClick={onDoneHandler}
         >
           {button}
         </button>
