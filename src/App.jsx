@@ -5,39 +5,38 @@ import InputSection from 'components/InputSection';
 import Layout from 'components/Layout';
 import ListSection from 'components/ListSection';
 import TodoBox from 'components/TodoBox';
-import { LIST_DATA } from 'list';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import {
+  addTodo,
+  deleteTodo,
+  updateTodo,
+} from 'redux_/modules/todo';
 
 function App() {
-  const [todoData, setTodoData] = useState(LIST_DATA);
+  const data = useSelector((state) => state).todo;
+  const dispatch = useDispatch();
 
-  const WORKING_LIST = todoData.filter((item) => item.isDone !== true);
-  const DONE_LIST = todoData.filter((item) => item.isDone === true);
+  const WORKING_LIST = data.filter((item) => item.isDone !== true);
+  const DONE_LIST = data.filter((item) => item.isDone === true);
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const onAddButtonClick = () => {
-    setTodoData([
-      ...todoData,
-      { id: todoData.length + 1, title, content, isDone: false },
-    ]);
+    dispatch(addTodo({ title, content }));
     setTitle("");
     setContent("");
   };
 
   const onDelete = (index) => {
-    const newListData = todoData.filter((item) => item.id !== index);
-    setTodoData(newListData);
+    dispatch(deleteTodo({ index }));
   };
 
-  const onChangeState = (index) => {
-    const updatedTodos = todoData.map((todo) => {
-      if (todo.id === index) {
-        return { ...todo, id: todo.id, isDone: !todo.isDone };
-      }
-      return todo;
-    });
-    setTodoData(updatedTodos);
+  const onToggleIsDone = (index) => {
+    dispatch(updateTodo({ index }));
   };
 
   return (
@@ -54,10 +53,9 @@ function App() {
         {WORKING_LIST.map((item) => (
           <TodoBox
             key={item.id}
-            button="Done"
             item={item}
             onDeleteHandler={() => onDelete(item.id)}
-            onDoneHandler={() => onChangeState(item.id)}
+            onToggleIsDone={() => onToggleIsDone(item.id)}
           />
         ))}
       </ListSection>
@@ -66,10 +64,9 @@ function App() {
         {DONE_LIST.map((item) => (
           <TodoBox
             key={item.id}
-            button="Cancel"
             item={item}
             onDeleteHandler={() => onDelete(item.id)}
-            onDoneHandler={() => onChangeState(item.id)}
+            onToggleIsDone={() => onToggleIsDone(item.id)}
           />
         ))}
       </ListSection>

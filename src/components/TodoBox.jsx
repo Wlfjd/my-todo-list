@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-function TodoBox({ item, onDoneHandler, onDeleteHandler }) {
+function TodoBox({ item, onToggleIsDone, onDeleteHandler }) {
   return (
     <BoxContainer>
       <div style={{ flex: 1 }}>
@@ -13,7 +13,7 @@ function TodoBox({ item, onDoneHandler, onDeleteHandler }) {
         <Stbutton color="green" onClick={onDeleteHandler}>
           Delete
         </Stbutton>
-        <Stbutton color="red" onClick={onDoneHandler}>
+        <Stbutton color="red" onClick={onToggleIsDone}>
           {item.isDone ? "Cancel" : "Done"}
         </Stbutton>
       </ButtonContainer>
