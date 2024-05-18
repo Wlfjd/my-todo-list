@@ -1,11 +1,18 @@
 import React from 'react';
 
+import styled from 'styled-components';
+
 function Header() {
   return (
-    <div style={{ background: "white", padding: " 6px 20px" }}>
+    <StHeader>
       <h3>Todo-List *</h3>
-    </div>
+    </StHeader>
   );
 }
 
 export default Header;
+
+const StHeader = styled.div`
+  background: white;
+  padding: 6px 20px;
+`;

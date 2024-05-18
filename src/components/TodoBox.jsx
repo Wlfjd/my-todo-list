@@ -1,59 +1,50 @@
 import React from 'react';
 
-function TodoBox({ item, button, onDoneHandler, onDeleteHandler }) {
+import styled from 'styled-components';
+
+function TodoBox({ item, onDoneHandler, onDeleteHandler }) {
   return (
-    <div
-      style={{
-        padding: "16px",
-        background: "white",
-        borderRadius: "20px",
-        height: "120px",
-        display: "flex",
-        flexDirection: "column",
-        margin: "4px",
-        width: "27%",
-        border: "3px solid #038387",
-      }}
-    >
+    <BoxContainer>
       <div style={{ flex: 1 }}>
         <h4 style={{ marginTop: 0 }}>{item?.title}</h4>
-        {item?.content}
+        <p>{item?.content}</p>
       </div>
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          gap: "10px",
-          justifyContent: "space-between",
-        }}
-      >
-        <button
-          style={{
-            padding: "6px",
-            flex: 1,
-            borderRadius: "10px",
-            border: "2px solid green",
-            background: "none",
-          }}
-          onClick={onDeleteHandler}
-        >
+      <ButtonContainer>
+        <Stbutton color="green" onClick={onDeleteHandler}>
           Delete
-        </button>
-        <button
-          style={{
-            padding: "6px",
-            border: "2px solid red",
-            background: "none",
-            flex: 1,
-            borderRadius: "10px",
-          }}
-          onClick={onDoneHandler}
-        >
-          {button}
-        </button>
-      </div>
-    </div>
+        </Stbutton>
+        <Stbutton color="red" onClick={onDoneHandler}>
+          {item.isDone ? "Cancel" : "Done"}
+        </Stbutton>
+      </ButtonContainer>
+    </BoxContainer>
   );
 }
 
 export default TodoBox;
+
+const BoxContainer = styled.div`
+  padding: 16px;
+  background: white;
+  border-radius: 20px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  margin: 4px;
+  width: 27%;
+  border: 3px solid #038387;
+`;
+
+const Stbutton = styled.button`
+  padding: 6px;
+  flex: 1;
+  border-radius: 10px;
+  border: 2px solid ${(props) => props.color};
+  background: none;
+`;
+const ButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+`;

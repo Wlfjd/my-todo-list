@@ -1,20 +1,25 @@
 import React from 'react';
 
+import styled from 'styled-components';
+
 function ListSection({ title, children }) {
   return (
     <>
-      <h2 style={{ padding: "0 16px", marginBottom: "3px" }}>{title}</h2>
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          flexWrap: "wrap",
-        }}
-      >
-        {children}
-      </div>
+      <StTitle>{title}</StTitle>
+      <ListWrapper>{children}</ListWrapper>
     </>
   );
 }
 
 export default ListSection;
+
+const StTitle = styled.h2`
+  padding: 0 16px;
+  margin-bottom: 3px;
+`;
+
+const ListWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+`;
