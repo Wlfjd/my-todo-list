@@ -1,4 +1,4 @@
-import { LIST_DATA } from 'list';
+import { LIST_DATA } from 'shared/list';
 
 const AddTodo = "todo/AddTodo";
 const DeleteTodo = "todo/DeleteTodo";

@@ -2,6 +2,11 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+const StHeader = styled.div`
+  background: white;
+  padding: 6px 20px;
+`;
+
 function Header() {
   return (
     <StHeader>
@@ -11,8 +16,3 @@ function Header() {
 }
 
 export default Header;
-
-const StHeader = styled.div`
-  background: white;
-  padding: 6px 20px;
-`;

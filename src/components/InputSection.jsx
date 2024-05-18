@@ -1,35 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { addTodo } from 'redux_/modules/todo';
 import styled from 'styled-components';
-
-function InputSection({
-  title,
-  content,
-  setTitle,
-  setContent,
-  onAddButtonClick,
-}) {
-  return (
-    <InputSectionWrapper>
-      <InputWrapper>
-        <InputContainer>
-          <h4>Title</h4>
-          <StInput value={title} onChange={(e) => setTitle(e.target.value)} />
-        </InputContainer>
-        <InputContainer>
-          <h4>Content</h4>
-          <StInput
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-        </InputContainer>
-      </InputWrapper>
-      <StButon onClick={onAddButtonClick}>Add</StButon>
-    </InputSectionWrapper>
-  );
-}
-
-export default InputSection;
 
 const InputSectionWrapper = styled.div`
   background: #e9e9e9;
@@ -66,3 +39,41 @@ const InputWrapper = styled.div`
   display: flex;
   gap: 20px;
 `;
+
+function InputSection() {
+  const dispatch = useDispatch();
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const resetInput = () => {
+    setTitle("");
+    setContent("");
+  };
+
+  const onAddButtonClick = () => {
+    dispatch(addTodo({ title, content }));
+    resetInput();
+  };
+
+  return (
+    <InputSectionWrapper>
+      <InputWrapper>
+        <InputContainer>
+          <h4>Title</h4>
+          <StInput value={title} onChange={(e) => setTitle(e.target.value)} />
+        </InputContainer>
+        <InputContainer>
+          <h4>Content</h4>
+          <StInput
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+        </InputContainer>
+      </InputWrapper>
+      <StButon onClick={onAddButtonClick}>Add</StButon>
+    </InputSectionWrapper>
+  );
+}
+
+export default InputSection;
